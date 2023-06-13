@@ -1,4 +1,6 @@
 
+// Problem statement: https://workat.tech/machine-coding/practice/splitwise-problem-0kp2yneec2q2
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,17 +10,15 @@ public class Main {
   public static void main(String[] args) {
     userDatabase = new UserDatabase();
     show();
-    System.out.println("----------------");
-    show("u1"); System.out.println("----------------");
-    expense("EXPENSE u1 1000 4 u1 u2 u3 u4 EQUAL"); System.out.println("----------------");
-    show("u4"); System.out.println("----------------");
-    show("u1"); System.out.println("----------------");
-    expense("EXPENSE u1 1250 2 u2 u3 EXACT 370 880"); System.out.println("----------------");
-    show(); System.out.println("----------------");
-    expense("EXPENSE u4 1200 4 u1 u2 u3 u4 PERCENT 40 20 20 20"); System.out.println("----------------");
-    show("u1"); System.out.println("----------------");
-    show(); System.out.println("----------------");
-    System.out.println("dfvdsdscdvdsvd");
+    show("u1");
+    expense("EXPENSE u1 1000 4 u1 u2 u3 u4 EQUAL");
+    show("u4");
+    show("u1");
+    expense("EXPENSE u1 1250 2 u2 u3 EXACT 370 880");
+    show();
+    expense("EXPENSE u4 1200 4 u1 u2 u3 u4 PERCENT 40 20 20 20");
+    show("u1");
+    show();
   }
 
   static void expense(String expenseInfo) {
@@ -37,8 +37,6 @@ public class Main {
     for (int i = 0; i < totalUsersInvolved; i++) {
       User friend = usersInvolved.get(i);
       if (!friend.userId.equals(paidBy.userId)) {
-        Integer friendOwesUser = paidBy.owedBy.get(friend.userId);
-        Integer userOwesFriend = friend.owesTo.get(paidBy.userId);
         int friendsShare = 0;
         if (splitStrategy.equals("EQUAL")) {
           friendsShare = paidAmount / totalUsersInvolved;
@@ -51,27 +49,37 @@ public class Main {
           return;
         }
 
-        if (friendOwesUser != null && userOwesFriend != null) {
-          if (friendOwesUser + friendsShare > userOwesFriend) {
-            paidBy.owesTo.put(friend.userId, friendOwesUser + friendsShare - userOwesFriend);
-            friend.owedBy.put(paidBy.userId, friendOwesUser + friendsShare - userOwesFriend);
-          }else if (friendOwesUser + friendsShare < userOwesFriend){
-            paidBy.owedBy.put(friend.userId, friendOwesUser + friendsShare - userOwesFriend);
-            friend.owesTo.put(paidBy.userId, friendOwesUser + friendsShare - userOwesFriend);
-          }else{
+        Integer friendOwesUser = paidBy.owedBy.get(friend.userId);
+        Integer userOwesFriend = paidBy.owesTo.get(friend.userId);
+
+        if (friendOwesUser != null) {
+          paidBy.owedBy.put(friend.userId, friendOwesUser + friendsShare);
+          friend.owesTo.put(paidBy.userId, friendOwesUser + friendsShare);
+        } else if (userOwesFriend != null) {
+          if (friendsShare > userOwesFriend) {
+            paidBy.owedBy.put(friend.userId, friendsShare - userOwesFriend);
+            friend.owesTo.put(paidBy.userId, friendsShare - userOwesFriend);
+
             paidBy.owesTo.remove(friend.userId);
             friend.owedBy.remove(paidBy.userId);
+          } else if (friendsShare < userOwesFriend) {
+            paidBy.owesTo.put(friend.userId, userOwesFriend - friendsShare);
+            friend.owedBy.put(paidBy.userId, userOwesFriend - friendsShare);
+
+            paidBy.owedBy.remove(friend.userId);
+            friend.owesTo.remove(paidBy.userId);
+          } else {
+            paidBy.owedBy.remove(friend.userId);
+            friend.owesTo.remove(paidBy.userId);
           }
-        } else if (friendOwesUser == null && userOwesFriend == null) {
+        } else {
           paidBy.owedBy.put(friend.userId, friendsShare);
           friend.owesTo.put(paidBy.userId, friendsShare);
-        } else if (friendOwesUser != null) {
-          System.out.println("Dcsdf");
         }
       }
     }
   }
-  
+
   static void show() {
     userDatabase.show();
   }
