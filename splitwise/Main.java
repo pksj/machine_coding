@@ -35,43 +35,39 @@ public class Main {
     }
     String splitStrategy = inputs[4 + totalUsersInvolved];
     for (int i = 0; i < totalUsersInvolved; i++) {
-      String userId = usersInvolved.get(i).userId;
-      if (!userId.equals(paidBy.userId)) {
-        Integer x = paidBy.owedBy.get(userId);
-        int share = 0;
-        if (x != null) {
-          share += x;
-        }
-
+      User friend = usersInvolved.get(i);
+      if (!friend.userId.equals(paidBy.userId)) {
+        Integer friendOwesUser = paidBy.owedBy.get(friend.userId);
+        Integer userOwesFriend = friend.owesTo.get(paidBy.userId);
+        int friendsShare = 0;
         if (splitStrategy.equals("EQUAL")) {
-          paidBy.owedBy.put(userId, share + paidAmount / totalUsersInvolved);
+          friendsShare = paidAmount / totalUsersInvolved;
         } else if (splitStrategy.equals("EXACT")) {
-          paidBy.owedBy.put(userId, share + Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]));
+          friendsShare = Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]);
         } else if (splitStrategy.equals("PERCENT")) {
-          paidBy.owedBy.put(userId,
-              share + (Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]) * paidAmount) / 100);
+          friendsShare = (Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]) * paidAmount) / 100;
         } else {
-
+          System.out.println("Incorrect split strategy.");
+          return;
         }
 
-        Integer y = userDatabase.getUserById(userId).owesTo.get(paidBy.userId);
-        share = 0;
-        if (y != null) {
-          share += y;
+        if (friendOwesUser != null && userOwesFriend != null) {
+          if (friendOwesUser + friendsShare > userOwesFriend) {
+            paidBy.owesTo.put(friend.userId, friendOwesUser + friendsShare - userOwesFriend);
+            friend.owedBy.put(paidBy.userId, friendOwesUser + friendsShare - userOwesFriend);
+          }else if (friendOwesUser + friendsShare < userOwesFriend){
+            paidBy.owedBy.put(friend.userId, friendOwesUser + friendsShare - userOwesFriend);
+            friend.owesTo.put(paidBy.userId, friendOwesUser + friendsShare - userOwesFriend);
+          }else{
+            paidBy.owesTo.remove(friend.userId);
+            friend.owedBy.remove(paidBy.userId);
+          }
+        } else if (friendOwesUser == null && userOwesFriend == null) {
+          paidBy.owedBy.put(friend.userId, friendsShare);
+          friend.owesTo.put(paidBy.userId, friendsShare);
+        } else if (friendOwesUser != null) {
+          System.out.println("Dcsdf");
         }
-
-        if (splitStrategy.equals("EQUAL")) {
-          userDatabase.getUserById(userId).owesTo.put(paidBy.userId, share + paidAmount / totalUsersInvolved);
-        } else if (splitStrategy.equals("EXACT")) {
-          userDatabase.getUserById(userId).owesTo.put(paidBy.userId,
-              share + Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]));
-        } else if (splitStrategy.equals("PERCENT")) {
-          userDatabase.getUserById(userId).owesTo.put(paidBy.userId,
-              share + (Integer.parseInt(inputs[4 + totalUsersInvolved + 1 + i]) * paidAmount) / 100);
-        } else {
-
-        }
-
       }
     }
   }
