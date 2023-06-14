@@ -53,8 +53,7 @@ public class Main {
       }
 
       System.out.println("Want to replay? reply with yes or no.");
-      String userResponse = sc.nextLine();
-      System.out.println(userResponse);
+      String userResponse = sc.next();
       if (userResponse.equals("yes")) {
         continue;
       } else {
