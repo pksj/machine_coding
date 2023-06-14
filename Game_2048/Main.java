@@ -1,15 +1,15 @@
-import java.util.Scanner;
 
+import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
-    Board board = new Board(4);
+    Board board = new Board();
     board.print();
     Scanner sc = new Scanner(System.in);
     while (true) {
       System.out.println("Input direction: 0 : left, 1 : right, 2 : up: 3 : down");
       int moveDirection = sc.nextInt();
       switch (moveDirection) {
-        case 0:
+        case 0: 
           board.moveLeft();
           break;
         case 1:
