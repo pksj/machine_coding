@@ -1,4 +1,3 @@
-
 public class Board {
   int n;
   int[][] board;
@@ -12,152 +11,108 @@ public class Board {
 
   void moveRight() {
     for (int i = 0; i < n; i++) {
-      boolean merged = false;
-      if (board[i][0] == board[i][1]) {
-        board[i][1] *= 2;
-        board[i][0] = 0;
-        merged = true;
-      }
-
-      if (board[i][2] == board[i][3]) {
-        board[i][3] *= 2;
-        board[i][2] = 0;
-        merged = true;
-      }
-      
-      if (merged == false && board[i][1] == board[i][2]) {
-        board[i][2] *= 2;
-        board[i][1] = 0;
-        merged = true;
-      }
-
-      if (merged == true) {
-        int lastIndex = n - 1;
-        for (int j = n - 1; j >= 0; j--) {
-          if (board[i][j] != 0) {
-            board[i][lastIndex] = board[i][j];
-            lastIndex--;
-          }
-        }
-        while (lastIndex >= 0) {
-          board[i][lastIndex--] = 0;
+      moveRowRight(i);
+      for (int j = n - 1; j > 0; j--) {
+        if (board[i][j - 1] == board[i][j]) {
+          board[i][j] *= 2;
+          board[i][j - 1] = 0;
         }
       }
-      
+      moveRowRight(i);
     }
   }
-  
+
   void moveLeft() {
     for (int i = 0; i < n; i++) {
-      boolean merged = false;
-      if (board[i][0] == board[i][1]) {
-        board[i][0] *= 2;
-        board[i][1] = 0;
-        merged = true;
-      }
-
-      if (board[i][2] == board[i][3]) {
-        board[i][2] *= 2;
-        board[i][3] = 0;
-        merged = true;
-      }
-      
-      if (merged == false && board[i][1] == board[i][2]) {
-        board[i][1] *= 2;
-        board[i][2] = 0;
-        merged = true;
-      }
-
-      if (merged == true) {
-        int lastIndex = 0;
-        for (int j = 0; j < n; j++) {
-          if (board[i][j] != 0) {
-            board[i][lastIndex] = board[i][j];
-            lastIndex++;
-          }
-        }
-        while (lastIndex < n) {
-          board[i][lastIndex++] = 0;
+      moveRowLeft(i);
+      for (int j = 0; j < n-1; j++) {
+        if (board[i][j + 1] == board[i][j]) {
+          board[i][j] *= 2;
+          board[i][j + 1] = 0;
         }
       }
+      moveRowLeft(i);
     }
   }
-  
+
   void moveUp() {
-     for (int i = 0; i < n; i++) {
-      boolean merged = false;
-      if (board[0][1] == board[1][i]) {
-        board[0][i] *= 2;
-        board[1][i] = 0;
-        merged = true;
-      }
-
-      if (board[2][i] == board[3][i]) {
-        board[2][i] *= 2;
-        board[3][i] = 0;
-        merged = true;
-      }
-      
-      if (merged == false && board[1][i] == board[2][i]) {
-        board[1][i] *= 2;
-        board[2][i] = 0;
-        merged = true;
-      }
-
-      if (merged == true) {
-        int lastIndex = 0;
-        for (int j = 0; j < n; j++) {
-          if (board[j][i] != 0) {
-            board[lastIndex][i] = board[j][i];
-            lastIndex++;
-          }
+    for (int i = 0; i < n; i++) {
+      moveColumnUp(i);
+      for (int j = 0; j < n-1; j++) {
+        if (board[i][j + 1] == board[i][j]) {
+          board[i][j] *= 2;
+          board[i][j + 1] = 0;
         }
-        while (lastIndex < n) {
-          board[lastIndex++][i] = 0;
-        }
-      } 
+      }
+      moveColumnUp(i);
     }
   }
-  
+
   void moveDown() {
-    // here i is column
-     for (int i = 0; i < n; i++) {
-      boolean merged = false;
-      if (board[0][1] == board[1][i]) {
-        board[1][i] *= 2;
-        board[0][i] = 0;
-        merged = true;
-      }
-
-      if (board[2][i] == board[3][i]) {
-        board[3][i] *= 2;
-        board[2][i] = 0;
-        merged = true;
-      }
-      
-      if (merged == false && board[1][i] == board[2][i]) {
-        board[2][i] *= 2;
-        board[1][i] = 0;
-        merged = true;
-      }
-
-      if (merged == true) {
-        int lastIndex = n - 1;
-        for (int j = n - 1; j >= 0; j--) {
-          if (board[j][i] != 0) {
-            board[lastIndex][i] = board[j][i];
-            lastIndex--;
-          }
-        }
-        while (lastIndex >= 0) {
-          board[lastIndex--][i] = 0;
+    for (int i = 0; i < n; i++) {
+      moveColumnDown(i);
+      for (int j = n-2; j >= 0; j--) {
+        if (board[i][j+1] == board[i][j]) {
+          board[i][j+1] *= 2;
+          board[i][j] = 0;
         }
       }
-      
+      moveColumnDown(i);
     }
- 
   }
-  
+
+  void moveRowRight(int row) {
+    int lastIndex = n - 1;
+    for (int j = n - 1; j >= 0; j--) {
+      if (board[row][j] != 0) {
+        board[row][lastIndex] = board[row][j];
+        lastIndex--;
+      }
+    }
+    while (lastIndex >= 0) {
+      board[row][lastIndex--] = 0;
+    }
+  }
+
+  void moveRowLeft(int row) {
+    int lastIndex = 0;
+    for (int j = 0; j < n; j++) {
+      if (board[row][j] != 0) {
+        board[row][lastIndex] = board[row][j];
+        lastIndex++;
+      }
+    }
+    while (lastIndex < n) {
+      board[row][lastIndex++] = 0;
+    }
+  }
+
+  void moveColumnDown(int col) {
+    int lastIndex = n - 1;
+    for (int j = 0; j < n; j++) {
+      if (board[j][col] != 0) {
+        board[lastIndex][col] = board[j][col];
+        lastIndex--;
+      }
+    }
+    while (lastIndex >= 0) {
+      board[lastIndex--][col] = 0;
+    }
+  }
+
+  void moveColumnUp(int col) {
+    int lastIndex = 0;
+    for (int j = 0; j < n; j++) {
+      if (board[j][col] != 0) {
+        board[lastIndex][col] = board[j][col];
+        lastIndex++;
+      }
+    }
+    while (lastIndex < n) {
+      board[lastIndex++][col] = 0;
+    }
+  }
+
   boolean checkForWin() {
     for (int[] row : board) {
       for (int cell : row) {
@@ -168,7 +123,7 @@ public class Board {
     }
     return false;
   }
-  
+
   boolean checkForGameOver() {
     for (int[] row : board) {
       for (int cell : row) {
@@ -189,28 +144,10 @@ public class Board {
     }
   }
 
-  // int getSumAndClearRow(int row) {
-  //   int sum = 0;
-  //   for (int i = 0; i < n; i++) {
-  //     sum += board[row][i];
-  //     board[row][i] = 0;
-  //   }
-  //   return sum;
-  // }
-  
-  // int getSumAndClearColumn(int col) {
-  //   int sum = 0;
-  //   for (int i = 0; i < n; i++) {
-  //     sum += board[i][col];
-  //     board[i][col] = 0;
-  //   }
-  //   return sum;
-  // }
-  
   void addTile() {
     while (true) {
-      int row = (int)(Math.random()*n);
-      int col = (int) (Math.random()*n);
+      int row = (int) (Math.random() * n);
+      int col = (int) (Math.random() * n);
       if (board[row][col] == 0) {
         board[row][col] = 2;
         break;
