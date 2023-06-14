@@ -2,11 +2,11 @@
 import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
-    Board board = new Board();
+    Board board = new Board(5);
     board.print();
     Scanner sc = new Scanner(System.in);
     while (true) {
-      System.out.println("Input direction: 0 : left, 1 : right, 2 : up: 3 : down");
+      System.out.println("Input direction => left:0, right:1, up:2, down:3");
       int moveDirection = sc.nextInt();
       switch (moveDirection) {
         case 0: 

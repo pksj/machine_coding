@@ -2,8 +2,8 @@ public class Board {
   int n;
   int[][] board;
 
-  Board() {
-    this.n = 4;
+  Board(int n) {
+    this.n = n;
     board = new int[n][n];
     addTile();
     addTile();
