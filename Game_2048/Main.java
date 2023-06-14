@@ -2,9 +2,11 @@
 import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
-    Board board = new Board(5);
-    board.print();
     Scanner sc = new Scanner(System.in);
+    System.out.println("Please enter baord size. It must be integer.");
+    int boardSize = sc.nextInt();
+    Board board = new Board(boardSize);
+    board.print();
     while (true) {
       System.out.println("Input direction => left:0, right:1, up:2, down:3");
       int moveDirection = sc.nextInt();
