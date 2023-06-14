@@ -1,9 +1,11 @@
 public class Board {
   int n;
+  int winningScore;
   int[][] board;
 
-  Board(int n) {
+  Board(int n, int winningScore) {
     this.n = n;
+    this.winningScore = winningScore;
     board = new int[n][n];
     addTile();
     addTile();
@@ -116,7 +118,7 @@ public class Board {
   boolean checkForWin() {
     for (int[] row : board) {
       for (int cell : row) {
-        if (cell == 2048) {
+        if (cell == this.winningScore) {
           return true;
         }
       }
