@@ -29,7 +29,7 @@ public class Main {
       }
 
       if (board.checkForWin() == true) {
-        System.out.println("Congratulation");
+        System.out.println("Congratulation! You won");
         break;
       }
       if (board.checkForGameOver() == true) {
