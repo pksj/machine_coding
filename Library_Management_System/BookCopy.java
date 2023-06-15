@@ -1,16 +1,16 @@
 package Library_Management_System;
 
 public class BookCopy {
-  private int id;
+  private String id;
   private Book book;
   private User borrowedBy;
   private String dueDate;
   private Rack rack;
-  public BookCopy(int id, Book book) {
+  public BookCopy(String id, Book book) {
     this.id = id;
     this.book = book;
   }
-  public int getId() {
+  public String getId() {
     return id;
   }
   public Book getBook() {

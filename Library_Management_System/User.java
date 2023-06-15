@@ -15,4 +15,26 @@ public class User {
     this.borrowingCapacity = borrowingCapacity;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public int getBorrowingCapacity() {
+    return borrowingCapacity;
+  }
+
+  public Map<Integer, Book> getBooksBorrowed() {
+    return booksBorrowed;
+  }
+
+  public int getTotalBooksBorrowed() {
+    return booksBorrowed.size();
+  }
+
+  
+
 }
