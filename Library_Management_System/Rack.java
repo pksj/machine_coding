@@ -1,14 +1,16 @@
 package Library_Management_System;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Rack
  */
 public class Rack {
-  int id;
-  int capacity;
-  List<Book> books;
+  private int id;
+  private int capacity;
+  private Map<Integer, Book> books;
+  
   public Rack(int id, int capacity) {
     this.id = id;
     this.capacity = capacity;
@@ -27,7 +29,14 @@ public class Rack {
     this.capacity = capacity;
   }
 
-  public void addBookToRack(Book book){
-    this.books.add(book);
+  public boolean addBookToRack(Book book){
+    if (this.books.size() == this.capacity) {
+      return false;
+    }
+    if (this.books.get(book.getId()) != null) {
+      return false;
+    }
+    this.books.put(book.getId(), book);
+    return true;
   }
 }

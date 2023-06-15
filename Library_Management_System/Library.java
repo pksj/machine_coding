@@ -1,24 +1,25 @@
 package Library_Management_System;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Library {
-  int id;
-  int numberOfRacks;
-  List<Rack> racks;
-  List<User> users;
+  private int id;
+  private int numberOfRacks;
+  private Map<Integer, User> users;
+  private Map<Integer, Map<Integer, BookCopy>> racks;
 
   public Library(int id, int numberOfRacks) {
     this.id = id;
     this.numberOfRacks = numberOfRacks;
-    System.out.println("Created library with " + numberOfRacks+ " racks" );
-  }
-
-  public void addRack(Rack rack) {
-    racks.add(rack);
+    for (int i = 1; i <= numberOfRacks; i++) {
+      this.racks.put(i, new HashMap<>());
+    }
+    System.out.println("Created library with " + numberOfRacks + " racks");
   }
   
-  public void addUser(User user){
-    users.add(user);
-  }  
+  public void addUser(User user) {
+    this.users.put(null, user)
+  }
 }

@@ -1,11 +1,15 @@
 package Library_Management_System;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Book {
-  int id;
-  String title;
-  String authors;
-  String publishers;
-  public Book(int id, String title, String authors, String publishers) {
+  private int id;
+  private String title;
+  private List<String> authors;
+  private List<String> publishers;
+  
+  public Book(int id, String title, List<String> authors, List<String> publishers) {
     this.id = id;
     this.title = title;
     this.authors = authors;
@@ -14,25 +18,13 @@ public class Book {
   public int getId() {
     return id;
   }
-  public void setId(int id) {
-    this.id = id;
-  }
   public String getTitle() {
     return title;
   }
-  public void setTitle(String title) {
-    this.title = title;
-  }
-  public String getAuthors() {
+  public List<String> getAuthors() {
     return authors;
   }
-  public void setAuthors(String authors) {
-    this.authors = authors;
-  }
-  public String getPublishers() {
+  public List<String> getPublishers() {
     return publishers;
-  }
-  public void setPublishers(String publishers) {
-    this.publishers = publishers;
   }
 }
