@@ -50,7 +50,12 @@ public class Book {
   public void setDueDate(String dueDate) {
     this.dueDate = dueDate;
   }
+
   public void setRack(Rack rack) {
     this.rack = rack;
+  }
+
+  public bool isBorrowed() {
+    return this.user == null;
   }
 }

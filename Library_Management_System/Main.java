@@ -25,7 +25,8 @@ public class Main {
     System.out.println(commands);
     Scanner sc = new Scanner(System.in);
     Library library = null;
-    while (true) {
+    boolean flag = true;
+    while (flag) {
       String[] inputs = sc.nextLine().split(" ");
       switch (inputs[0]) {
         case "create_library":
@@ -55,6 +56,7 @@ public class Main {
           library.removeBookCopy(inputs[1]);
           break;
         case "borrow_book":
+        case "borrow_book_copy":
           user = library.getUserByUserId(inputs[2]);
           if (user == null) {
             System.out.println("Invalid user.");
@@ -63,25 +65,34 @@ public class Main {
             if (booksBorrowedByUser > user.getBorrowingCapacity()) {
               System.out.println("OverLimit.");
             } else {
-              String bookId = inputs[1];
               String dueDate = inputs[3];
-
+              if (inputs[0] == "borrow_book") {
+                String bookId = inputs[1];
+                library.borrowBookByBookId(bookId, user, dueDate);
+              } else {
+                String bookCopyId = inputs[1];
+                library.borrowBookByBookCopyId(bookCopyId, user, dueDate);
+              }
+              
             }
           }
-
-          library.removeBookCopy(inputs[1]);
-          break;
-        case "borrow_book_copy":
-          library.removeBookCopy(inputs[1]);
           break;
         case "return_book_copy":
+          String bookCopyId = inputs[1];
+          library.returnBook(bookCopyId);;
           break;
         case "print_borrowed":
+          String userId = inputs[1];
+          library.printBorrowed(userId);
           break;
         case "search":
+        
           break;
+        case "exit":
         default:
+          flag = false;
           break;
+         
       }
     }
   }

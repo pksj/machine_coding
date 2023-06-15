@@ -112,4 +112,68 @@ public class Library {
   public User getUserByUserId(String userId) {
     return users.get(userId);
   }
+
+  public void returnBook(String bookCopyId) {
+    for (Map.Entry<String, Map<String, Book>> rack : racks.entrySet()) {
+      String rackId = rack.getKey();
+      Map<String, Book> booksOnRack = rack.getValue();
+      for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
+        if (book.getValue().getId() == bookCopyId) {
+          book.getValue().setBorrowedBy(null);
+          book.getValue().setDueDate(null);
+          System.out.println("Returned book copy" + bookCopyId + " and added to rack:" + rackId);
+          return;
+        }
+      }
+    }
+    System.out.println("Invalid Book Copy ID");
+  }
+
+  public void printBorrowed(String userId) {
+    for (Map.Entry<String, Map<String, Book>> rack : racks.entrySet()) {
+      Map<String, Book> booksOnRack = rack.getValue();
+      for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
+        User borrower = book.getValue().getBorrowedBy();
+        if (borrower != null && borrower.getId().equals(userId)) {
+          System.out.println("Book Copy: " + book.getValue().getBookCopyId() + " " + book.getValue().getDueDate());
+        }
+      }
+    }
+  }
+
+  public void search(String attribute, String attributeValue) {
+    for (Map.Entry<String, Map<String, Book>> rack : racks.entrySet()) {
+      Map<String, Book> booksOnRack = rack.getValue();
+      for (Map.Entry<String, Book> entry : booksOnRack.entrySet()) {
+        Book book = entry.getValue();
+        User borrower = book.getBorrowedBy();
+        boolean bookFound = false;
+        switch (attribute) {
+          case "bookId":
+            bookFound = book.getId() == attributeValue;
+            break;
+          case "bookCopyId":
+            bookFound = book.getBookCopyId() == attributeValue;
+            break;
+          case "title":
+            bookFound = book.getTitle() == attributeValue;
+            break;
+          case "author":
+            bookFound = book.getAuthors().contains(attributeValue);
+            break;
+          case "publisher":
+            bookFound = book.getPublishers().contains(attributeValue);
+            break;
+          default:
+            break;
+        }
+        if (bookFound) {
+          System.out.print("Book Copy: " + book.getBookCopyId() + " " + book.getId() + " " + book.getTitle() + " "
+              + String.join(",", book.getAuthors()) + " " + String.join(",", book.getPublishers()) + " "
+              + borrower != null ? rack.getKey() : "-1");
+          System.out.println(borrower != null ? (borrower.getId() + " " + book.getDueDate()) : "");
+        }
+      }
+    }
+  }
 }
