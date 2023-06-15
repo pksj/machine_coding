@@ -1,5 +1,6 @@
 package Library_Management_System;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ public class User {
     this.name = name;
     this.id = id;
     this.borrowingCapacity = borrowingCapacity;
+    this.booksBorrowed = new HashMap<>();
   }
 
   public String getName() {

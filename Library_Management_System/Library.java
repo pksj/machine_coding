@@ -14,6 +14,8 @@ public class Library {
   public Library(String id, int numberOfRacks) {
     this.id = id;
     this.numberOfRacks = numberOfRacks;
+    this.users = new HashMap<>();
+    this.racks = new HashMap<>();
     for (int i = 1; i <= numberOfRacks; i++) {
       this.racks.put(Integer.toString(i), new HashMap<>());
     }
@@ -43,7 +45,7 @@ public class Library {
       String rackId = rack.getKey();
       Map<String, Book> booksOnRack = rack.getValue();
       for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
-        if (book.getValue().getBookCopyId() == bookCopyId) {
+        if (book.getValue().getBookCopyId().equals(bookCopyId)) {
           booksOnRack.remove(book.getKey());
           System.out.println("Removed book copy: " + bookCopyId + " from rack: " + rackId);
           return;
@@ -67,7 +69,7 @@ public class Library {
       String rackId = rack.getKey();
       Map<String, Book> booksOnRack = rack.getValue();
       for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
-        if (book.getValue().getId() == bookId) {
+        if (book.getValue().getId().equals(bookId)) {
           bookAvailable = true;
           if (book.getValue().getBorrowedBy() == null) {
             book.getValue().setBorrowedBy(user);
@@ -91,7 +93,7 @@ public class Library {
       String rackId = rack.getKey();
       Map<String, Book> booksOnRack = rack.getValue();
       for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
-        if (book.getValue().getBookCopyId() == bookCopyId) {
+        if (book.getValue().getBookCopyId().equals(bookCopyId)) {
           bookAvailable = true;
           if (book.getValue().getBorrowedBy() == null) {
             book.getValue().setBorrowedBy(user);
@@ -118,7 +120,7 @@ public class Library {
       String rackId = rack.getKey();
       Map<String, Book> booksOnRack = rack.getValue();
       for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
-        if (book.getValue().getId() == bookCopyId) {
+        if (book.getValue().getId().equals(bookCopyId)) {
           book.getValue().setBorrowedBy(null);
           book.getValue().setDueDate(null);
           System.out.println("Returned book copy" + bookCopyId + " and added to rack:" + rackId);
@@ -149,16 +151,16 @@ public class Library {
         User borrower = book.getBorrowedBy();
         boolean bookFound = false;
         switch (attribute) {
-          case "bookId":
-            bookFound = book.getId() == attributeValue;
+          case "book_id":
+            bookFound = book.getId().equals(attributeValue);
             break;
-          case "bookCopyId":
-            bookFound = book.getBookCopyId() == attributeValue;
+          case "book_copy_id":
+            bookFound = book.getBookCopyId().equals(attributeValue);
             break;
           case "title":
-            bookFound = book.getTitle() == attributeValue;
+            bookFound = book.getTitle().equals(attributeValue);
             break;
-          case "author":
+          case "author_id":
             bookFound = book.getAuthors().contains(attributeValue);
             break;
           case "publisher":
@@ -169,8 +171,7 @@ public class Library {
         }
         if (bookFound) {
           System.out.print("Book Copy: " + book.getBookCopyId() + " " + book.getId() + " " + book.getTitle() + " "
-              + String.join(",", book.getAuthors()) + " " + String.join(",", book.getPublishers()) + " "
-              + borrower != null ? rack.getKey() : "-1");
+              + String.join(",", book.getAuthors()) + " " + String.join(",", book.getPublishers()) + " "+ (borrower != null ? rack.getKey() : "-1"));
           System.out.println(borrower != null ? (borrower.getId() + " " + book.getDueDate()) : "");
         }
       }
