@@ -120,7 +120,7 @@ public class Library {
       String rackId = rack.getKey();
       Map<String, Book> booksOnRack = rack.getValue();
       for (Map.Entry<String, Book> book : booksOnRack.entrySet()) {
-        if (book.getValue().getId().equals(bookCopyId)) {
+        if (book.getValue().getBookCopyId().equals(bookCopyId)) {
           book.getValue().setBorrowedBy(null);
           book.getValue().setDueDate(null);
           System.out.println("Returned book copy" + bookCopyId + " and added to rack:" + rackId);
