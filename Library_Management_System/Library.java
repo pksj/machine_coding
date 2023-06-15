@@ -11,6 +11,7 @@ public class Library {
   public Library(int id, int numberOfRacks) {
     this.id = id;
     this.numberOfRacks = numberOfRacks;
+    System.out.println("Created library with " + numberOfRacks+ " racks" );
   }
 
   public void addRack(Rack rack) {
