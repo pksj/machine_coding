@@ -55,7 +55,7 @@ public class Book {
     this.rack = rack;
   }
 
-  public bool isBorrowed() {
-    return this.user == null;
+  public boolean isBorrowed() {
+    return this.borrowedBy != null;
   }
 }

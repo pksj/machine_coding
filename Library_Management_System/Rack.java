@@ -9,7 +9,7 @@ import java.util.Map;
 public class Rack {
   private int id;
   private int capacity;
-  private Map<Integer, Book> books;
+  private Map<String, Book> books;
   
   public Rack(int id, int capacity) {
     this.id = id;
@@ -36,6 +36,7 @@ public class Rack {
     if (this.books.get(book.getId()) != null) {
       return false;
     }
+
     this.books.put(book.getId(), book);
     return true;
   }
