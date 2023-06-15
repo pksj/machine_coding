@@ -73,27 +73,29 @@ public class Main {
                 String bookCopyId = inputs[1];
                 library.borrowBookByBookCopyId(bookCopyId, user, dueDate);
               }
-              
+
             }
           }
           break;
         case "return_book_copy":
           String bookCopyId = inputs[1];
-          library.returnBook(bookCopyId);;
+          library.returnBook(bookCopyId);
+          ;
           break;
         case "print_borrowed":
           String userId = inputs[1];
           library.printBorrowed(userId);
           break;
         case "search":
-        
+
           break;
         case "exit":
         default:
           flag = false;
           break;
-         
+
       }
     }
+    sc.close();
   }
 }
