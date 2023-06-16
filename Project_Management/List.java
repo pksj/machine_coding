@@ -31,4 +31,7 @@ public class List {
   public void setCards(Map<String, Card> cards) {
     this.cards = cards;
   }
+  public void addCard(Card card) {
+    this.cards.put(card.getId(), card);
+  }
 }

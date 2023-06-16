@@ -8,11 +8,11 @@ public class Card {
   private String Description;
   private User assignedUser;
   
-  public Card(String name, String description, User assignedUser) {
+  public Card(String name, String description) {
     this.id = UUID.randomUUID().toString();
     this.name = name;
     Description = description;
-    this.assignedUser = assignedUser;
+    this.assignedUser = null;
   }
 
   public String getId() {

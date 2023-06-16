@@ -26,7 +26,6 @@ public class Board {
     this.lists = lists;
   }
 
-
   public String getId() {
     return id;
   }
