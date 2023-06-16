@@ -47,5 +47,7 @@ public class Card {
     this.assignedUser = assignedUser;
   }
   
-
+  public void unAssignUser() {
+    this.assignedUser = null;
+  }
 }
