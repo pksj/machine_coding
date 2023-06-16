@@ -13,6 +13,7 @@ public class Card {
     this.name = name;
     Description = description;
     this.assignedUser = null;
+     System.out.println("Created Card with id: " + this.id);
   }
 
   public String getId() {

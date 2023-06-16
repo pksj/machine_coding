@@ -19,30 +19,40 @@ public class Main {
         case "Board":
           switch (inputs[1]) {
             case "CREATE":
-
+              String boardName = inputs[2];
+              Board board = new Board(boardName);
+              boards.put(board.getId(), board);
               break;
             case "ADD_MEMBER":
-
+              String boardId = inputs[2];
+              String userId = inputs[3];
+              boards.get(boardId).addMember(users.get(userId));
               break;
             case "REMOVE_MEMBER":
-
+              boardId = inputs[2];
+              userId = inputs[3];
+              boards.get(boardId).removeMember(users.get(userId));
               break;
             case "DELETE":
-
+              boardId = inputs[2];
+              boards.remove(boardId);
               break;
-
             default:
               break;
           }
-
           break;
         case "List":
           switch (inputs[1]) {
             case "CREATE":
-
+            String listName = inputs[2];
+            String boardId = inputs[3];
+            List list = new List(listName);
+            boards.get(boardId).addList(list);
               break;
             case "DELETE":
-
+              String boardId = inputs[2];
+              String listId = inputs[3];
+              boards.get(boardId).getLists().get(listId).removeList(list);
               break;
 
             default:
@@ -50,10 +60,45 @@ public class Main {
           }
           break;
         case "CARD":
+          switch (inputs[1]) {
+            case "CREATE":
 
+              Card card = new Card(null, null); 
+              break;
+            case "ASSIGN":
+
+              break;
+            case "UNASSIGN":
+
+              break;
+            case "MOVE":
+
+              break;
+
+            case "DELETE":
+
+              break;
+
+            default:
+              break;
+          }
           break;
         case "SHOW":
+          switch (inputs[1]) {
+            case "BOARD":
 
+              break;
+            case "LIST":
+
+              break;
+            case "CARD":
+
+              break;
+
+            default:
+              break;
+          }
+          break;
         default:
           break;
       }

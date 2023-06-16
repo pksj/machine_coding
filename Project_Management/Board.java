@@ -24,6 +24,7 @@ public class Board {
     this.url = "mycompany.com/boards/" + this.id;
     this.members = null;
     this.lists = null;
+    System.out.println("Created Board with id: " + this.id);
   }
 
   public String getId() {
@@ -49,7 +50,15 @@ public class Board {
     this.members.put(user.getid(), user);
   }
 
+  public void removeMember(User user) {
+    this.members.remove(user.getid());
+  }
+
   public void addList(List list) {
     this.lists.put(list.getId(), list);
+  }
+
+  public void removeList(List list) {
+    this.lists.remove(list.getId());
   }
 }

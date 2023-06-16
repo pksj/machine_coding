@@ -1,5 +1,6 @@
 package Project_Management;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -8,10 +9,11 @@ public class List {
   private String name;
   private Map<String, Card> cards;
 
-  public List(String name, Map<String, Card> cards) {
+  public List(String name) {
     this.id = UUID.randomUUID().toString();
     this.name = name;
-    this.cards = cards;
+    this.cards = new HashMap<>();
+    System.out.println("Created List with id: " + this.id);
   }
   public String getId() {
     return id;
